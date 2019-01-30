@@ -1,5 +1,5 @@
 {
-  "name": "domain_test_h5",
+  "name": "dandelion",
   "version": "1.0.0",
   "description": "A Vue.js project",
   "author": "yuki",
@@ -25,11 +25,6 @@
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
-    "@base/zepto": "^4.0.0",
-    "@beibei/encode": "1.0.0",
-    "@beibei/httpurl": "^1.0.2",
-    "@fe-base/ajax": "2.3.6",
-    "@fe-beibei/wx-login": "^1.0.3",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
