@@ -36,7 +36,7 @@ export default {
     methods: {
         register() {
             axios({
-                url: 'http://127.0.0.1:3001/api/register',
+                url: 'http://test.xue.com:3001/api/register',
                 method: 'post',
                 data: {
                     account: this.account,

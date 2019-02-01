@@ -36,7 +36,7 @@ export default {
     methods: {
         login() {
             axios({
-                url: 'http://127.0.0.1:3001/api/login',
+                url: 'http://test.xue.com:3001/api/login',
                 method: 'post',
                 data: {
                     account: this.account,

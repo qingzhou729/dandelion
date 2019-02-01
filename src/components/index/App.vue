@@ -1,9 +1,10 @@
 
 <template>
-    <div>
+    <div class="wrap">
         <el-button type="primary" @click="addDemand">新建需求</el-button>
+        <div style="height:20px"></div>
         <!-- 需求列表 -->
-        <el-table border ref="filterTable" :data="tableData" style="width: 100%">
+        <el-table border ref="filterTable" :data="tableData" style="width: 90%">
             <el-table-column
                 prop="create_time"
                 label="日期"
@@ -28,7 +29,7 @@
                 <template slot-scope="scope">
                     <el-button
                       size="mini"
-                      @click="dialogVisible1 = true">创建分支</el-button>
+                      @click="createBranch(scope)">创建分支</el-button>
                 </template>
             </el-table-column>
             <el-table-column label="发布">
@@ -71,16 +72,15 @@
       </el-dialog>
       <!-- 新建分支 -->
       <el-dialog title="提示" :visible.sync="dialogVisible1" width="60%">
-          <el-form ref="form" :model="form" label-width="80px">
+          <el-form ref="form1" :model="form1" label-width="80px">
               <el-form-item label="项目名称">
-                <el-select v-model="form.region" placeholder="请选择活动区域">
-                  <el-option label="m" value="shanghai"></el-option>
-                  <el-option label="pc" value="beijing"></el-option>
+                <el-select v-model="form1.project_name" placeholder="请选择项目">
+                  <el-option v-for="(item, index) in projectData" :label="item.project_name" :value="item.pid" :key="index"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="发布时间">
                 <el-col :span="11">
-                  <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                  <el-date-picker type="date" placeholder="选择日期" v-model="form1.date" style="width: 100%;"></el-date-picker>
                 </el-col>
               </el-form-item>
               <el-form-item>
@@ -98,9 +98,14 @@ export default {
     data() {
         return {  
             tableData: [],
+            projectData: [],
         form: {
           title: '',
           desc: ''
+        },
+        form1: {
+          project_name: '',
+          date: ''
         },
          dialogVisible: false,
          dialogVisible1: false
@@ -108,18 +113,32 @@ export default {
     },
     mounted() { 
       this.getData();
+      this.getProjectInfo();
     },
     methods: {
         getData(){
             axios({
-                url: 'http://127.0.0.1:3001/api/selectUserDemand',
+                url: 'http://test.xue.com:3001/api/selectUserDemand',
                 method: 'get',
-                params: this.form,
+                // params: this.form,
                 withCredentials: true,
             }).then(res => {
                 console.log(res);
                 this.tableData = res.data.data;
             })
+        },
+        getProjectInfo() {
+           axios({
+                url: 'http://test.xue.com:3001/api/selectProject',
+                method: 'get',
+                withCredentials: true,
+            }).then(res => {
+                console.log(res);
+                this.projectData = res.data.data;
+            })
+        },
+        createBranch(item) {
+            console.log(item);
         },
         login() {
             this.$router.push({
@@ -128,7 +147,7 @@ export default {
         },
         onSubmit() {
            axios({
-                url: 'http://127.0.0.1:3001/api/insertDemand',
+                url: 'http://test.xue.com:3001/api/insertDemand',
                 method: 'get',
                 params: this.form,
                 withCredentials: true,
@@ -141,8 +160,7 @@ export default {
             console.log(this.form);
       },
       addDemand() {
-          this.dialogVisible = true;
-         
+          this.dialogVisible = true; 
       },
         resetDateFilter() {
         this.$refs.filterTable.clearFilter('date');
@@ -172,6 +190,10 @@ export default {
 </script>
 
 <style scoped>
+.wrap{
+  padding: 30px;
+  box-sizing: border-box;
+}
 .el-header {
     background-color: #B3C0D1;
     color: #333;
