@@ -20,6 +20,11 @@ export default new Router({
           component: register,
         },
         {
+          path: '/',
+          name: 'index',
+          component: index,
+        },
+        {
           path: '/index',
           name: 'index',
           component: index,
