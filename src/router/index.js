@@ -7,7 +7,8 @@ import index from '@/components/index/App.vue';
 Vue.use(Router)
 
 export default new Router({
-    mode: 'history',
+    // 服务器部署会有问题history注释
+    // mode: 'history',
     routes: [
         {
           path: '/login',
