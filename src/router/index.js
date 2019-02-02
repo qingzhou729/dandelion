@@ -8,7 +8,7 @@ Vue.use(Router)
 
 export default new Router({
     // 服务器部署会有问题history注释
-    mode: 'history',
+    // mode: 'history',
     routes: [
         {
           path: '/login',
