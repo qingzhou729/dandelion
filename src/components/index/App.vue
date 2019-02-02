@@ -4,7 +4,7 @@
         <el-button type="primary" @click="addDemand">新建需求</el-button>
         <div style="height:20px"></div>
         <!-- 需求列表 -->
-        <el-table border ref="filterTable" :data="tableData" style="width: 90%">
+        <el-table border ref="filterTable" :data="tableData" width="100%">
             <el-table-column
                 prop="create_time"
                 label="日期"
