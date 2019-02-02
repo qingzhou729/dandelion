@@ -22,7 +22,7 @@
                 <template slot-scope="scope">
                     <el-tag
                     :type="'primary'"
-                    disable-transitions>{{scope.row.status === 1 ? "新建" : ''}}</el-tag>
+                    disable-transitions>{{scope.row.status === 1 ? "新建" : '开发中'}}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column label="分支管理">
@@ -74,17 +74,20 @@
       <el-dialog title="提示" :visible.sync="dialogVisible1" width="60%">
           <el-form ref="form1" :model="form1" label-width="80px">
               <el-form-item label="项目名称">
-                <el-select v-model="form1.project_name" placeholder="请选择项目">
+                <el-select v-model="form1.pid" placeholder="请选择项目">
                   <el-option v-for="(item, index) in projectData" :label="item.project_name" :value="item.pid" :key="index"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="发布时间">
                 <el-col :span="11">
-                  <el-date-picker type="date" placeholder="选择日期" v-model="form1.date" style="width: 100%;"></el-date-picker>
+                  <el-date-picker 
+                    format="yyyy 年 MM 月 dd 日"
+                    value-format="yyyy-MM-dd"
+                    type="date" placeholder="选择日期" v-model="form1.pub_time" style="width: 100%;"></el-date-picker>
                 </el-col>
               </el-form-item>
               <el-form-item>
-                <el-button type="primary" @click="onSubmit">立即创建</el-button>
+                <el-button type="primary" @click="onSubmit1">立即创建</el-button>
                 <el-button>取消</el-button>
               </el-form-item>
           </el-form>
@@ -104,11 +107,12 @@ export default {
           desc: ''
         },
         form1: {
-          project_name: '',
-          date: ''
+          pid: '',
+          pub_time: ''
         },
          dialogVisible: false,
-         dialogVisible1: false
+         dialogVisible1: false,
+         did: null,
         };
     },
     mounted() { 
@@ -138,7 +142,9 @@ export default {
             })
         },
         createBranch(item) {
+            this.dialogVisible1 = true;
             console.log(item);
+            this.did = item.row.did;
         },
         login() {
             this.$router.push({
@@ -158,6 +164,21 @@ export default {
             })
             console.log('submit!');
             console.log(this.form);
+      },
+      onSubmit1(){
+        const params = Object.assign(this.form1, {
+            did: this.did,
+        })
+          axios({
+              url: 'http://test.xue.com:3001/api/createBranch',
+              method: 'get',
+              params,
+              withCredentials: true,
+          }).then(res => {
+              console.log(res);
+              this.dialogVisible1 = false;
+          })
+          console.log(this.form1)
       },
       addDemand() {
           this.dialogVisible = true; 
