@@ -8,7 +8,7 @@ import router from './router'
 import ElementUI from 'element-ui';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-
+// 分支测试我是远程
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.use(VueResource);
