@@ -14,7 +14,7 @@
                     <el-dropdown-item>删除</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
-                <span>王小虎</span>
+                <span>杨玉雪</span>
             </el-header>
             <!-- 内容 -->
             <div class="content">
