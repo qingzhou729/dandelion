@@ -30,6 +30,7 @@
                     <el-button
                       size="mini"
                       @click="createBranch(scope)">创建分支</el-button>
+                      {{scope.row.branch_name}}
                 </template>
             </el-table-column>
             <el-table-column label="发布">

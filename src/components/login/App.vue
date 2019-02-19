@@ -51,38 +51,6 @@ export default {
                     })
                 }
             })
-
-            // axios({
-            //     url: 'http://127.0.0.1:3001/api/login',
-            //     method: 'get',
-            //     params: {
-            //         account: this.account,
-            //         password: this.password,
-            //     },
-            //     withCredentials: true, // 允许设置凭证
-            // }).then(res => {
-            //     console.log(res);
-            // })
-
-
-            //  $.ajax({
-            //     type: 'POST',
-            //     url: 'http://127.0.0.1:3001/api/login',
-            //     data: {
-            //         account: this.account,
-            //         password: this.password,
-            //     },
-            //     xhrFields: {
-            //         withCredentials: true,
-            //     },
-            //     dataType: 'json',
-            //     success(rsp) {
-            //         console.log(`接口`);
-            //     },
-            //     error() {
-            //         note('网络错误,请稍后重试');
-            //     },
-            // });
         },
         goRegister() {
             this.$router.push({
