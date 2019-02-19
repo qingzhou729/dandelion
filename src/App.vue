@@ -18,7 +18,7 @@
             </el-header>
             <!-- 内容 -->
             <div class="content">
-                <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+                <!-- <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
                     <el-menu :default-openeds="['1','2']">
                         <el-submenu index="1">
                             <template slot="title">日常管理</template>
@@ -31,7 +31,7 @@
                             <el-menu-item index="2-2">发布队列</el-menu-item>
                         </el-submenu>
                     </el-menu>
-                </el-aside>
+                </el-aside> -->
                 <div class="main-content">
                     <router-view/>
                     <!-- <el-footer>Footer</el-footer> -->

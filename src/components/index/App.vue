@@ -52,6 +52,12 @@
               </template>
             </el-table-column>
         </el-table>
+        <el-pagination
+          class="pagination"
+          background
+          layout="prev, pager, next"
+          :total="1000">
+        </el-pagination>
         <!-- 新建需求 -->
         <el-dialog
             title="提示"
@@ -224,6 +230,12 @@ export default {
   
   .el-aside {
     color: #333;
+  }
+  .el-pagination{
+    width: 400px;
+
+    margin: 0 auto;
+    margin-top: 20px;
   }
 </style>
 
