@@ -17,8 +17,7 @@
                 <span>王小虎</span>
             </el-header>
             <!-- 内容 -->
-            <div class="content">
-                <!-- <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+              <!-- <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
                     <el-menu :default-openeds="['1','2']">
                         <el-submenu index="1">
                             <template slot="title">日常管理</template>
@@ -32,6 +31,8 @@
                         </el-submenu>
                     </el-menu>
                 </el-aside> -->
+            <div class="content">
+              
                 <div class="main-content">
                     <router-view/>
                     <!-- <el-footer>Footer</el-footer> -->
