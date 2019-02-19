@@ -37,7 +37,7 @@
               <template slot-scope="scope">
                 <el-button
                   size="mini"
-                  @click="handleEdit(scope.$index, scope.row)">去发布</el-button>
+                  @click="stage(scope.row)">去发布</el-button>
               </template>
             </el-table-column>
             <el-table-column label="操作">
@@ -127,6 +127,21 @@ export default {
       this.getProjectInfo();
     },
     methods: {
+      stage(row) {
+        console.log(row)
+          axios({
+                url: 'http://test.xue.com:3001/api/stage',
+                method: 'get',
+                params: {
+                  branch_name: row.branch_name,
+                  did: row.did,
+                },
+                withCredentials: true,
+            }).then(res => {
+                console.log('stage')
+                console.log(res);
+            })
+      },
         getData(){
             axios({
                 url: 'http://test.xue.com:3001/api/selectUserDemand',
