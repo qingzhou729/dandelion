@@ -4,7 +4,11 @@
             <router-view/>
         </div> -->
         <!-- <div v-else> -->
+<<<<<<< HEAD
             <!--1111111111 头部 -->
+=======
+            <!-- 1头部1 -->
+>>>>>>> dc328f473ee99776baa87d726ed94a1b3582c528
             <el-header style="text-align: right; font-size: 12px">
                 <el-dropdown>
                     <i class="el-icon-setting" style="margin-right: 15px"></i>
@@ -14,7 +18,7 @@
                     <el-dropdown-item>删除</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
-                <span>王小虎</span>
+                <span>杨玉雪</span>
             </el-header>
             <!-- 内容 -->
               <!-- <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
