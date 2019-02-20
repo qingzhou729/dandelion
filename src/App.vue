@@ -14,7 +14,7 @@
                     <el-dropdown-item>删除</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
-                <span>预发测试 yuxue.yang@beibei.com</span>
+                <span>cp测试 yuxue.yang@beibei.com</span>
             </el-header>
             <!-- 内容 -->
               <!-- <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
