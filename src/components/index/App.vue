@@ -56,6 +56,8 @@
           class="pagination"
           background
           layout="prev, pager, next"
+          :current-page="page"
+          @current-change="currentChange"
           :total="1000">
         </el-pagination>
         <!-- 新建需求 -->
@@ -120,6 +122,7 @@ export default {
          dialogVisible: false,
          dialogVisible1: false,
          did: null,
+         page: 1,
         };
     },
     mounted() { 
@@ -127,6 +130,10 @@ export default {
       this.getProjectInfo();
     },
     methods: {
+      currentChange(e){
+        this.page = e;
+        this.getData();
+      },
       stage(row) {
         console.log(row)
           axios({
@@ -149,7 +156,7 @@ export default {
             axios({
                 url: 'http://test.xue.com:3001/api/selectUserDemand',
                 method: 'get',
-                // params: this.form,
+                params: {page:this.page},
                 withCredentials: true,
             }).then(res => {
                 console.log(res);
