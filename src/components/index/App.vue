@@ -159,7 +159,7 @@ export default {
                       item.statusText = '新建';
                     } else if (item.status === 2) {
                       item.statusText = '开发中';
-                    } eles if (item.status === 3) {
+                    } else if (item.status === 3) {
                       item.statusText = '预发待验证';
                     } 
                 })
