@@ -22,7 +22,7 @@
                 <template slot-scope="scope">
                     <el-tag
                     :type="'primary'"
-                    disable-transitions>{{scope.row.status === 1 ? "新建" : '开发中'}}</el-tag>
+                    disable-transitions>{{scope.row.statusText}}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column label="分支管理">
@@ -138,8 +138,11 @@ export default {
                 },
                 withCredentials: true,
             }).then(res => {
-                console.log('stage')
+                
                 console.log(res);
+                if (res.data.success) {
+                    console.log('预发布成功');
+                }
             })
       },
         getData(){
@@ -151,6 +154,15 @@ export default {
             }).then(res => {
                 console.log(res);
                 this.tableData = res.data.data;
+                this.tableData.forEach((item) => {
+                    if (item.status === 1) {
+                      item.statusText = '新建';
+                    } else if (item.status === 2) {
+                      item.statusText = '开发中';
+                    } eles if (item.status === 3) {
+                      item.statusText = '预发待验证';
+                    } 
+                })
             })
         },
         getProjectInfo() {
