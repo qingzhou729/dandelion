@@ -80,7 +80,7 @@
                 <el-input type="textarea" v-model="form.desc"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit">立即创建</el-button>
+                <el-button type="primary" @click="updateSubmit">立即创建</el-button>
                 <el-button>取消</el-button>
             </el-form-item>
         </el-form>
@@ -116,8 +116,28 @@ export default {
         this.getProjectInfo();
     },
     methods: {
-        handleEdit() {
+        handleEdit(e) {
             this.updateDemand = true;
+            this.form = {
+                title: e.title,
+                desc: e.demand_desc,
+                did: e.did,
+            }
+        },
+        updateSubmit() {
+            axios({
+                url: 'http://test.xue.com:3001/api/updateDemand',
+                method: 'get',
+                params: this.form,
+                withCredentials: true,
+            }).then(res => {
+                this.$message({
+                    message: '修改成功',
+                    type: 'success'
+                });
+                this.getData();
+                this.form = {};
+            })
         },
         currentChange(e) {
             this.page = e;
