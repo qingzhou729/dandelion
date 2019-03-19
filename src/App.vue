@@ -1,21 +1,21 @@
 <template>
-    <div id="app">
-        <!-- <div v-if="!show">
+<div id="app">
+    <!-- <div v-if="!show">
             <router-view/>
         </div> -->
-        <!-- <div v-else> -->
-            <el-header style="text-align: right; font-size: 12px">
-                <el-dropdown>
-                    <i class="el-icon-setting" style="margin-right: 15px"></i>
-                    <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>查看qqqqqqqqqqq</el-dropdown-item>
-                    <el-dropdown-item>新增</el-dropdown-item>
-                    <el-dropdown-item>删除</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>                <span>456xxxxxxxx</span>
-            </el-header>
-            <!-- 内容 -->
-              <!-- <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+    <!-- <div v-else> -->
+    <el-header style="text-align: right; font-size: 12px">
+        <el-dropdown>
+            <i class="el-icon-setting" style="margin-right: 15px"></i>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>查看qqqqqqqqqqq</el-dropdown-item>
+                <el-dropdown-item>新增</el-dropdown-item>
+                <el-dropdown-item>删除</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown> <span>456xxxxxxxx</span>
+    </el-header>
+    <!-- 内容 -->
+    <!-- <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
                     <el-menu :default-openeds="['1','2']">
                         <el-submenu index="1">
                             <template slot="title">日常管理</template>
@@ -29,21 +29,20 @@
                         </el-submenu>
                     </el-menu>
                 </el-aside> -->
-            <div class="content">
-              
-                <div class="main-content">
-                    <router-view/>
-                    <!-- <el-footer>Footer</el-footer> -->
-                </div>
-            </div>
+    <div class="content">
+        <div class="main-content">
+            <router-view />
+            <!-- <el-footer>Footer</el-footer> -->
         </div>
-    <!-- </div> -->
+    </div>
+</div>
+<!-- </div> -->
 </template>
 
 <script>
 export default {
     name: 'App',
-    data () {
+    data() {
         return {
             show: false,
         }
@@ -72,22 +71,24 @@ export default {
     background-color: #B3C0D1;
     color: #333;
     line-height: 60px;
-  }
+}
 
-.header{
+.header {
     height: 100px;
 }
-.content{
+
+.content {
     display: flex;
     flex-direction: row;
     flex: 1;
 }
 
-.main-content{
+.main-content {
     flex: 1;
 }
 
-html,body {
+html,
+body {
     margin: 0;
     height: 100%;
 }
