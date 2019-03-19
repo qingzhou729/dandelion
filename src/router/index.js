@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import test from '@/components/test/App.vue';
 import login from '@/components/login/App.vue';
 import register from '@/components/register/App.vue';
 import index from '@/components/index/App.vue';
