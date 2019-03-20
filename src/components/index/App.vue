@@ -89,7 +89,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+import ajax from '../../common/baseAjax';
+
 export default {
     data() {
         return {
@@ -125,11 +126,9 @@ export default {
             }
         },
         updateSubmit() {
-            axios({
-                url: 'http://test.xue.com:3001/api/updateDemand',
-                method: 'get',
+            ajax({
+                url: 'updateDemand',
                 params: this.form,
-                withCredentials: true,
             }).then(res => {
                 this.$message({
                     message: '修改成功',
@@ -145,14 +144,12 @@ export default {
         },
         stage(row) {
             console.log(row)
-            axios({
-                url: 'http://test.xue.com:3001/api/stage',
-                method: 'get',
+            ajax({
+                url: 'stage',
                 params: {
                     branch_name: row.branch_name,
                     did: row.did,
                 },
-                withCredentials: true,
             }).then(res => {
 
                 console.log(res);
@@ -162,17 +159,14 @@ export default {
             })
         },
         getData() {
-            axios({
-                url: 'http://test.xue.com:3001/api/selectUserDemand',
-                method: 'get',
+            ajax({
+                url: 'selectUserDemand',
                 params: {
                     page: this.page
                 },
-                withCredentials: true,
             }).then(res => {
-                console.log(res);
-                this.totalPage = res.data.count;
-                this.tableData = res.data.data;
+                this.totalPage = res.count;
+                this.tableData = res.data;
                 this.tableData.forEach((item) => {
                     if (item.status === 1) {
                         item.statusText = '新建';
@@ -185,13 +179,11 @@ export default {
             })
         },
         getProjectInfo() {
-            axios({
-                url: 'http://test.xue.com:3001/api/selectProject',
-                method: 'get',
+            ajax({
+                url: 'selectProject',
                 withCredentials: true,
             }).then(res => {
-                console.log(res);
-                this.projectData = res.data.data;
+                this.projectData = res.data;
             })
         },
         createBranch(item) {
@@ -205,28 +197,21 @@ export default {
             })
         },
         onSubmit() {
-            axios({
-                url: 'http://test.xue.com:3001/api/insertDemand',
-                method: 'get',
+            ajax({
+                url: 'insertDemand',
                 params: this.form,
-                withCredentials: true,
             }).then(res => {
-                console.log(res);
                 this.dialogVisible = false;
                 this.getData();
-            })
-            console.log('submit!');
-            console.log(this.form);
+            });
         },
         onSubmit1() {
             const params = Object.assign(this.form1, {
                 did: this.did,
             })
-            axios({
-                url: 'http://test.xue.com:3001/api/createBranch',
-                method: 'get',
+            ajax({
+                url: 'createBranch',
                 params,
-                withCredentials: true,
             }).then(res => {
                 console.log(res);
                 this.dialogVisible1 = false;
@@ -261,13 +246,11 @@ export default {
         },
         handleDelete(item) {
             console.log(item)
-            axios({
-                url: 'http://test.xue.com:3001/api/deleteDemand',
-                method: 'get',
+            ajax({
+                url: 'deleteDemand',
                 params: {
                     did: item.did,
                 },
-                withCredentials: true,
             }).then(res => {
                 console.log(res);
                 this.$message({
