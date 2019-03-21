@@ -3,14 +3,12 @@
     <el-header style="text-align: right; font-size: 18px;">
         <span>苍耳</span>
     </el-header>
-    
     <div class="content">
         <div class="main-content">
             <router-view />
         </div>
     </div>
 </div>
-<!-- </div> -->
 </template>
 
 <script>
@@ -21,8 +19,7 @@ export default {
             show: false,
         }
     },
-    mounted() {
-    },
+    mounted() {},
 }
 </script>
 

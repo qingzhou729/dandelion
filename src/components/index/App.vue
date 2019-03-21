@@ -1,12 +1,23 @@
 <template>
 <div class="wrap">
-    <el-button type="primary" @click="addDemand">新建需求</el-button>
+    <div>
+        <el-button type="primary" @click="addDemand" style="margin-right:20px;">新建需求</el-button>
+        <el-select v-model="value" placeholder="筛选">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
+        </el-select>
+    </div>
+
     <div style="height:20px"></div>
     <!-- 需求列表 -->
     <el-table border ref="filterTable" :data="tableData" width="100%">
         <el-table-column prop="create_time" label="日期" sortable width="180">
         </el-table-column>
-        <el-table-column prop="title" label="需求" width="180">
+        <el-table-column label="需求信息" width="180">
+            <template slot-scope="scope">
+                <p>标题：{{scope.row.title}}</p>
+                <p>描述：{{scope.row.demand_desc}}</p>
+            </template>
         </el-table-column>
         <el-table-column prop="status" label="状态">
             <template slot-scope="scope">
@@ -15,7 +26,7 @@
         </el-table-column>
         <el-table-column label="分支管理">
             <template slot-scope="scope">
-                <el-button size="mini" @click="createBranch(scope)">创建分支</el-button>
+                <el-button v-if="!scope.row.branch_name" size="mini" @click="createBranch(scope)">创建分支</el-button>
                 {{scope.row.branch_name}}
             </template>
         </el-table-column>
@@ -45,13 +56,13 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">立即创建</el-button>
-                <el-button>取消</el-button>
+                <el-button @click="dialogVisible = false">取消</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
 
     <!-- 新建分支 -->
-    <el-dialog title="提示" :visible.sync="dialogVisible1" width="60%">
+    <el-dialog title="新建需求" :visible.sync="dialogVisible1" width="60%">
         <el-form ref="form1" :model="form1" label-width="80px">
             <el-form-item label="项目名称">
                 <el-select v-model="form1.pid" placeholder="请选择项目">
@@ -65,7 +76,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSubmit1">立即创建</el-button>
-                <el-button>取消</el-button>
+                <el-button @click="dialogVisible1 = false">取消</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
@@ -80,8 +91,8 @@
                 <el-input type="textarea" v-model="form.desc"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="updateSubmit">立即创建</el-button>
-                <el-button>取消</el-button>
+                <el-button type="primary" @click="updateSubmit">立即修改</el-button>
+                <el-button @click="updateDemand = false">取消</el-button>
             </el-form-item>
         </el-form>
     </el-dialog>
@@ -110,6 +121,21 @@ export default {
             did: null,
             page: 1,
             totalPage: 1,
+            activeName2: 'first',
+            options: [{
+                value: '选项1',
+                label: '所有需求'
+            }, {
+                value: '选项2',
+                label: '新建'
+            }, {
+                value: '选项3',
+                label: '发布中'
+            }, {
+                value: '选项4',
+                label: '已完结'
+            }],
+            value: ''
         };
     },
     mounted() {
@@ -117,6 +143,9 @@ export default {
         this.getProjectInfo();
     },
     methods: {
+        handleClick(tab, event) {
+            console.log(tab, event);
+        },
         handleEdit(e) {
             this.updateDemand = true;
             this.form = {
@@ -135,6 +164,7 @@ export default {
                     type: 'success'
                 });
                 this.getData();
+                this.updateDemand = false;
                 this.form = {};
             })
         },
@@ -238,26 +268,27 @@ export default {
             return row[property] === value;
         },
         handleClose(done) {
-            this.$confirm('确认关闭？')
+            this.$confirm('确认要删除吗？')
                 .then(_ => {
                     done();
                 })
                 .catch(_ => {});
         },
         handleDelete(item) {
-            console.log(item)
-            ajax({
-                url: 'deleteDemand',
-                params: {
-                    did: item.did,
-                },
-            }).then(res => {
-                console.log(res);
-                this.$message({
-                    message: '删除成功',
-                    type: 'success'
-                });
-                this.getData();
+            this.handleClose(() => {
+                ajax({
+                    url: 'deleteDemand',
+                    params: {
+                        did: item.did,
+                    },
+                }).then(res => {
+                    console.log(res);
+                    this.$message({
+                        message: '删除成功',
+                        type: 'success'
+                    });
+                    this.getData();
+                })
             })
         },
     },
