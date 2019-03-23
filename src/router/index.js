@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import login from '@/components/login/App.vue';
 import register from '@/components/register/App.vue';
 import index from '@/components/index/App.vue';
+import waitForRelease from '@/components/demand/waitForRelease/App.vue';
 Vue.use(Router)
 
 const routes = [
@@ -25,6 +26,11 @@ const routes = [
         path: '/index',
         name: 'index',
         component: index,
+    },
+    {
+        path: '/waitForRelease',
+        name: 'waitForRelease',
+        component: waitForRelease,
     },
 ];
 

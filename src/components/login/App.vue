@@ -41,7 +41,7 @@ export default {
                 },
             }).then(res => {
                 console.log(res.data);
-                if (res.data.success) {
+                if (res.success) {
                     this.$router.push({
                         path: '/index'
                     })

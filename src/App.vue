@@ -4,6 +4,16 @@
         <span>苍耳</span>
     </el-header>
     <div class="content">
+        <el-aside v-if="showAside" width="200px" style="background-color: rgb(238, 241, 246)">
+            <el-menu :default-openeds="defaultMenuConfig">
+                <el-submenu v-for="(item, index) in menuConfig" :key="index" :index="item.submenu.index">
+                    <template slot="title"><i class="el-icon-menu"></i>{{item.submenu.title}}</template>
+                    <el-menu-item-group>
+                        <el-menu-item @click="goLink(ele.router)" v-for="(ele, i) in item.menugroup" :key="i" :index="ele.index">{{ele.title}}</el-menu-item>
+                    </el-menu-item-group>
+                </el-submenu>
+            </el-menu>
+        </el-aside>
         <div class="main-content">
             <router-view />
         </div>
@@ -17,9 +27,68 @@ export default {
     data() {
         return {
             show: false,
+            defaultMenuConfig: ['1'],
+            menuConfig: [
+                {
+                    submenu: {
+                        title: '需求管理',
+                        index: '1',
+                    },
+                    menugroup: [
+                        {
+                            title: '我的任务',
+                            router: '/index',
+                            index: "1-1",
+                        },
+                        {
+                            title: '发布队列',
+                            router: '/waitForRelease',
+                            index: "1-2",
+                        },
+                    ],
+                },
+                {
+                    submenu: {
+                        title: '项目管理',
+                        index: '2',
+                    },
+                    menugroup: [
+                        {
+                            title: '项目信息',
+                            router: '',
+                            index: "2-1",
+                        },
+                        {
+                            title: '我的项目',
+                            router: '',
+                            index: "2-2",
+                        },
+                    ],
+                },
+            ],
+            showAside: true,
         }
     },
-    mounted() {},
+    watch:{
+        $route(to,from){
+            if (to.path !== '/login') {
+                this.showAside = true;
+            }
+        }
+    },
+    mounted() {
+        console.log(this.$route.path)
+        if (this.$route.path === '/login') {
+            this.showAside = false;
+        }
+    },
+    methods: {
+        goLink(path) {
+            this.$router.push({
+                path,
+            });
+        },
+    },
 }
 </script>
 
@@ -48,10 +117,24 @@ export default {
     display: flex;
     flex-direction: row;
     flex: 1;
+    height: 100%;
 }
 
 .main-content {
+    box-sizing: border-box;
     flex: 1;
+    height: 100%;
+    flex-shrink: 0;
+    overflow: auto;
+}
+
+.el-menu-item-group__title{
+    padding: 0;
+}
+
+.el-icon-message, .el-icon-menu{
+    position: relative;
+    top: -2px;
 }
 
 html,

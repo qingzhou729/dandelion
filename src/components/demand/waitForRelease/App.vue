@@ -2,24 +2,13 @@
 <div class="wrap">
     <!-- 头部文案 -->
     <div>
-        <h2>按时间排序的所有需求</h2>
+        <h2>正在发布中的所有需求</h2>
     </div>
-    <!-- 按钮区域 -->
-    <div>
-        <el-button type="primary" @click="addDemand" style="margin-right:20px;">新建需求</el-button>
-        <el-select v-model="value" placeholder="筛选">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
-        </el-select>
-    </div>
-
-    <div style="height:20px"></div>
     <!-- 需求列表 -->
     <el-table border ref="filterTable" :data="tableData" width="100%">
         <el-table-column prop="create_time" label="日期" sortable width="180">
         </el-table-column>
         <el-table-column prop="title" label="需求标题"></el-table-column>
-        <el-table-column prop="demand_desc" label="需求描述"></el-table-column>
         <el-table-column prop="status" label="状态" width="110px">
             <template slot-scope="scope">
                 <el-tag :type="'primary'" disable-transitions>{{scope.row.statusText}}</el-tag>
@@ -31,72 +20,20 @@
                 {{scope.row.branch_name}}
             </template>
         </el-table-column>
-        <el-table-column label="操作" width="160px">
+        <el-table-column label="发布" width="110px">
             <template slot-scope="scope">
-                <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-                <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                <el-button size="mini" @click="stage(scope.row)">去发布</el-button>
             </template>
         </el-table-column>
     </el-table>
     <!-- 分页组件 -->
     <el-pagination class="pagination" background layout="prev, pager, next, total" :current-page="page" @current-change="currentChange" :total="totalPage">
     </el-pagination>
-    <!-- 新建需求 -->
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="60%">
-        <el-form ref="form" :model="form" label-width="80px">
-            <el-form-item label="需求名称">
-                <el-input v-model="form.title"></el-input>
-            </el-form-item>
-            <el-form-item label="需求描述">
-                <el-input type="textarea" v-model="form.desc"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="onSubmit">立即创建</el-button>
-                <el-button @click="dialogVisible = false">取消</el-button>
-            </el-form-item>
-        </el-form>
-    </el-dialog>
-
-    <!-- 新建分支 -->
-    <el-dialog title="新建需求" :visible.sync="dialogVisible1" width="60%">
-        <el-form ref="form1" :model="form1" label-width="80px">
-            <el-form-item label="项目名称">
-                <el-select v-model="form1.pid" placeholder="请选择项目">
-                    <el-option v-for="(item, index) in projectData" :label="item.project_name" :value="item.pid" :key="index"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="发布时间">
-                <el-col :span="11">
-                    <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" type="date" placeholder="选择日期" v-model="form1.pub_time" style="width: 100%;"></el-date-picker>
-                </el-col>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="onSubmit1">立即创建</el-button>
-                <el-button @click="dialogVisible1 = false">取消</el-button>
-            </el-form-item>
-        </el-form>
-    </el-dialog>
-
-    <!-- 修改需求 -->
-    <el-dialog title="修改需求信息" :visible.sync="updateDemand" width="60%">
-        <el-form ref="form" :model="form" label-width="80px">
-            <el-form-item label="需求名称">
-                <el-input v-model="form.title"></el-input>
-            </el-form-item>
-            <el-form-item label="需求描述">
-                <el-input type="textarea" v-model="form.desc"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="updateSubmit">立即修改</el-button>
-                <el-button @click="updateDemand = false">取消</el-button>
-            </el-form-item>
-        </el-form>
-    </el-dialog>
 </div>
 </template>
 
 <script>
-import ajax from '../../common/baseAjax';
+import ajax from '../../../common/baseAjax';
 
 export default {
     data() {
@@ -117,21 +54,18 @@ export default {
             did: null,
             page: 1,
             totalPage: 1,
-            activeName2: 1,
+            activeName2: 'first',
             options: [{
-                value: '',
+                value: '选项1',
                 label: '所有需求'
             }, {
-                value: 1,
+                value: '选项2',
                 label: '新建'
             }, {
-                value: 2,
-                label: '开发中'
-            },{
-                value: 3,
+                value: '选项3',
                 label: '发布中'
             }, {
-                value: 4,
+                value: '选项4',
                 label: '已完结'
             }],
             value: ''
@@ -192,7 +126,7 @@ export default {
                 url: 'selectUserDemand',
                 params: {
                     page: this.page,
-                    status: '',
+                    type: 1,
                 },
             }).then(res => {
                 this.totalPage = res.count;
