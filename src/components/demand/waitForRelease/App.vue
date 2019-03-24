@@ -159,7 +159,7 @@ export default {
                 }
             })
         },
-        mergeToMaster() {
+        mergeToMaster(row) {
             ajax({
                 url: 'mergeToMaster',
                 params: {
