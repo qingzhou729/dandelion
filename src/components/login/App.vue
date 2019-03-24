@@ -18,9 +18,8 @@
 </template>
 
 <script>
-import axios from 'axios';
-// axios.defaults.withCredentials = true;
-// // axios.defaults.crossDomain = true;
+
+import ajax from '../../common/baseAjax';
 
 export default {
     data() {
@@ -33,17 +32,16 @@ export default {
     mounted() {},
     methods: {
         login() {
-            axios({
-                url: 'http://test.xue.com:3001/api/login',
+            ajax({
+                url: 'login',
                 method: 'post',
                 data: {
                     account: this.account,
                     password: this.password,
                 },
-                withCredentials: true, // 允许设置凭证
             }).then(res => {
                 console.log(res.data);
-                if (res.data.success) {
+                if (res.success) {
                     this.$router.push({
                         path: '/index'
                     })
