@@ -31,6 +31,26 @@
     <!-- 分页组件 -->
     <el-pagination class="pagination" background layout="prev, pager, next, total" :current-page="page" @current-change="currentChange" :total="totalPage">
     </el-pagination>
+
+    <!-- 新建分支 -->
+    <el-dialog title="新建需求" :visible.sync="dialogVisible1" width="60%">
+        <el-form ref="form1" :model="form1" label-width="80px">
+            <el-form-item label="项目名称">
+                <el-select v-model="form1.pid" placeholder="请选择项目">
+                    <el-option v-for="(item, index) in projectData" :label="item.project_name" :value="item.pid" :key="index"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="发布时间">
+                <el-col :span="11">
+                    <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" type="date" placeholder="选择日期" v-model="form1.pub_time" style="width: 100%;"></el-date-picker>
+                </el-col>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit1">立即创建</el-button>
+                <el-button @click="dialogVisible1 = false">取消</el-button>
+            </el-form-item>
+        </el-form>
+    </el-dialog>
 </div>
 </template>
 
