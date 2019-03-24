@@ -1,7 +1,7 @@
 <template>
 <div id="app">
     <el-header style="text-align: right; font-size: 18px;">
-        <span>苍耳!!!</span>
+        <span>yangyuxue!!!</span>
     </el-header>
     <div class="content">
         <el-aside v-if="showAside" width="200px" style="background-color: rgb(238, 241, 246)">
