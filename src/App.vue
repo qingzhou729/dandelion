@@ -28,14 +28,12 @@ export default {
         return {
             show: false,
             defaultMenuConfig: ['1'],
-            menuConfig: [
-                {
+            menuConfig: [{
                     submenu: {
                         title: '需求管理',
                         index: '1',
                     },
-                    menugroup: [
-                        {
+                    menugroup: [{
                             title: '我的任务',
                             router: '/index',
                             index: "1-1",
@@ -52,20 +50,18 @@ export default {
                         title: '项目管理',
                         index: '2',
                     },
-                    menugroup: [
-                        {
-                            title: '项目列表',
-                            router: '/projectList',
-                            index: "2-1",
-                        },
-                    ],
+                    menugroup: [{
+                        title: '项目列表',
+                        router: '/projectList',
+                        index: "2-1",
+                    }, ],
                 },
             ],
             showAside: true,
         }
     },
-    watch:{
-        $route(to,from){
+    watch: {
+        $route(to, from) {
             if (to.path !== '/login') {
                 this.showAside = true;
             }
@@ -123,11 +119,12 @@ export default {
     overflow: auto;
 }
 
-.el-menu-item-group__title{
+.el-menu-item-group__title {
     padding: 0;
 }
 
-.el-icon-message, .el-icon-menu{
+.el-icon-message,
+.el-icon-menu {
     position: relative;
     top: -2px;
 }

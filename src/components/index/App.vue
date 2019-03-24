@@ -77,7 +77,7 @@
     <el-dialog title="新建需求" :visible.sync="dialogVisible1" width="60%">
         <el-form ref="form1" :model="form1" label-width="80px">
             <el-form-item label="项目名称">
-                <el-select v-model="form1.pid" placeholder="请选择项目">
+                <el-select @change="projectChange" v-model="form1.pid" placeholder="请选择项目">
                     <el-option v-for="(item, index) in projectData" :label="item.project_name" :value="item.pid" :key="index"></el-option>
                 </el-select>
             </el-form-item>
@@ -143,14 +143,15 @@ export default {
             }, {
                 value: 2,
                 label: '开发中'
-            },{
+            }, {
                 value: 3,
                 label: '发布中'
             }, {
                 value: 7,
                 label: '已完结'
             }],
-            value: ''
+            value: '',
+            pid: '',
         };
     },
     mounted() {
@@ -167,7 +168,7 @@ export default {
         },
         goPublish() {
             this.$router.push({
-                path: '/waitForRelease', 
+                path: '/waitForRelease',
             });
         },
         handleClick(tab, event) {
@@ -180,6 +181,10 @@ export default {
                 desc: e.demand_desc,
                 did: e.did,
             }
+        },
+        projectChange(e) {
+            console.log(e);
+            this.pid = e;
         },
         updateSubmit() {
             ajax({
@@ -266,6 +271,7 @@ export default {
         onSubmit1() {
             const params = Object.assign(this.form1, {
                 did: this.did,
+                pid: this.pid,
             })
             ajax({
                 url: 'createBranch',

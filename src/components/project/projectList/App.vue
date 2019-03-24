@@ -10,9 +10,9 @@
         <el-table-column prop="project_shortid" label="项目描述"></el-table-column>
         <el-table-column prop="project_url" label="项目url"></el-table-column>
         <el-table-column prop="project_dir" label="项目目录(project)"></el-table-column>
-        <el-table-column prop="project_predir" label="验证cookie"></el-table-column>
-        <el-table-column prop="project_pre" label="预发目录(pre-project)"></el-table-column>
-        <el-table-column prop="project_prepro" label="生产目录(pro-project)"></el-table-column>
+        <el-table-column prop="project_pre" label="验证cookie"></el-table-column>
+        <el-table-column prop="project_predir" label="预发目录(pre-dir)"></el-table-column>
+        <el-table-column prop="project_prepro" label="生产目录(pro-dir)"></el-table-column>
     </el-table>
 </div>
 </template>

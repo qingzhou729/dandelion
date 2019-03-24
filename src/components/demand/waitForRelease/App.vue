@@ -35,7 +35,7 @@
                 <el-tag :type="'primary'" v-if="scope.row.status === 1" disable-transitions>新建</el-tag>
                 <el-button v-if="scope.row.status === 2" size="mini" type="warning" plain @click="pretest(scope.row)">部署至预发环境</el-button>
                 <el-button v-if="scope.row.status === 3" size="mini" type="primary" @click="updateDemandStatus(scope.row, 4)">预发环境验证</el-button>
-                <el-button v-if="scope.row.status === 4" size="mini" type="warning" plain  @click="production(scope.row)">部署至生产环境</el-button>
+                <el-button v-if="scope.row.status === 4" size="mini" type="warning" plain @click="production(scope.row)">部署至生产环境</el-button>
                 <el-button v-if="scope.row.status === 5" size="mini" type="success" @click="updateDemandStatus(scope.row, 6)">正式环境验证</el-button>
                 <el-button v-if="scope.row.status === 6" size="mini" type="success" @click="mergeToMaster(scope.row)">合并主干</el-button>
                 <el-tag :type="'success'" v-if="scope.row.status === 7" disable-transitions>需求已经完完结</el-tag>
@@ -148,6 +148,7 @@ export default {
                 params: {
                     branch_name: row.branch_name,
                     did: row.did,
+                    pid: row.pid,
                 },
             }).then(res => {
 
@@ -164,6 +165,7 @@ export default {
                 params: {
                     branch_name: row.branch_name,
                     did: row.did,
+                    pid: row.pid,
                 },
             }).then(res => {
 
@@ -179,6 +181,7 @@ export default {
                 params: {
                     branch_name: row.branch_name,
                     did: row.did,
+                    pid: row.pid,
                 },
             }).then(res => {
 
