@@ -22,7 +22,8 @@
         </el-table-column>
         <el-table-column label="发布" width="110px">
             <template slot-scope="scope">
-                <el-button size="mini" @click="stage(scope.row)">去发布</el-button>
+                <el-button size="mini" @click="pretest(scope.row)">部署预发环境</el-button>
+                <el-button size="mini" @click="production(scope.row)">部署生产环境</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -105,10 +106,26 @@ export default {
             this.page = e;
             this.getData();
         },
-        stage(row) {
+        pretest(row) {
             console.log(row)
             ajax({
-                url: 'stage',
+                url: 'pretest',
+                params: {
+                    branch_name: row.branch_name,
+                    did: row.did,
+                },
+            }).then(res => {
+
+                console.log(res);
+                if (res.data.success) {
+                    console.log('预发布成功');
+                }
+            })
+        },
+        production(row) {
+            console.log(row)
+            ajax({
+                url: 'production',
                 params: {
                     branch_name: row.branch_name,
                     did: row.did,
