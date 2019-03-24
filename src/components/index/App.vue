@@ -44,7 +44,7 @@
             <template slot-scope="scope">
                 <el-button v-if="!scope.row.branch_name" size="mini" @click="createBranch(scope)">创建分支</el-button>
                 <p>{{scope.row.branch_name}}</p>
-                <el-button v-if="scope.row.branch_name" size="mini" @click="goPublish()">去发布</el-button>
+                <el-button v-if="scope.row.branch_name && scope.row.status !== 7" size="mini" @click="goPublish()">去发布</el-button>
             </template>
         </el-table-column>
         <el-table-column label="操作" width="160px">
@@ -87,7 +87,7 @@
                 </el-col>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit1">立即创建</el-button>
+                <el-button type="primary" @click="onSubmit1">立即创建<i v-if="showBranchLoading" class="el-icon-loading"></i></el-button>
                 <el-button @click="dialogVisible1 = false">取消</el-button>
             </el-form-item>
         </el-form>
@@ -152,6 +152,7 @@ export default {
             }],
             value: '',
             pid: '',
+            showBranchLoading: false,
         };
     },
     mounted() {
@@ -269,6 +270,7 @@ export default {
             });
         },
         onSubmit1() {
+            this.showBranchLoading = true;
             const params = Object.assign(this.form1, {
                 did: this.did,
                 pid: this.pid,
@@ -278,6 +280,7 @@ export default {
                 params,
             }).then(res => {
                 console.log(res);
+                this.showBranchLoading = false;
                 this.dialogVisible1 = false;
                 this.getData();
             })

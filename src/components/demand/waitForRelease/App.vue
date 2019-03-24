@@ -33,11 +33,11 @@
                     7、完成合并主干，发布完成
                 -->
                 <el-tag :type="'primary'" v-if="scope.row.status === 1" disable-transitions>新建</el-tag>
-                <el-button v-if="scope.row.status === 2" size="mini" type="warning" plain @click="pretest(scope.row)">部署至预发环境</el-button>
-                <el-button v-if="scope.row.status === 3" size="mini" type="primary" @click="updateDemandStatus(scope.row, 4)">预发环境验证</el-button>
-                <el-button v-if="scope.row.status === 4" size="mini" type="warning" plain @click="production(scope.row)">部署至生产环境</el-button>
-                <el-button v-if="scope.row.status === 5" size="mini" type="success" @click="updateDemandStatus(scope.row, 6)">正式环境验证</el-button>
-                <el-button v-if="scope.row.status === 6" size="mini" type="success" @click="mergeToMaster(scope.row)">合并主干</el-button>
+                <el-button v-if="scope.row.status === 2" size="mini" type="primary" plain @click="pretest(scope.row)">部署至预发环境<i v-if="scope.row.loading" class="el-icon-loading"></i></el-button>
+                <el-button v-if="scope.row.status === 3" size="mini" type="primary" @click="updateDemandStatus(scope.row, 4)">预发环境验证<i v-if="scope.row.loading" class="el-icon-loading"></i></el-button>
+                <el-button v-if="scope.row.status === 4" size="mini" type="warning" plain @click="production(scope.row)">部署至生产环境<i v-if="scope.row.loading" class="el-icon-loading"></i></el-button>
+                <el-button v-if="scope.row.status === 5" size="mini" type="warning" @click="updateDemandStatus(scope.row, 6)">正式环境验证<i v-if="scope.row.loading" class="el-icon-loading"></i></el-button>
+                <el-button v-if="scope.row.status === 6" size="mini" type="success" @click="mergeToMaster(scope.row)">合并主干<i v-if="scope.row.loading" class="el-icon-loading"></i></el-button>
                 <el-tag :type="'success'" v-if="scope.row.status === 7" disable-transitions>需求已经完完结</el-tag>
             </template>
         </el-table-column>
@@ -104,7 +104,7 @@ export default {
                 value: '选项4',
                 label: '已完结'
             }],
-            value: ''
+            value: '',
         };
     },
     mounted() {
@@ -142,7 +142,7 @@ export default {
             this.getData();
         },
         pretest(row) {
-            console.log(row)
+            this.$set(row, 'loading', true);
             ajax({
                 url: 'pretest',
                 params: {
@@ -151,14 +151,17 @@ export default {
                     pid: row.pid,
                 },
             }).then(res => {
-
+                this.$set(row, 'loading', false);
+                this.$set(row, 'status', row.status + 1);
                 console.log(res);
-                if (res.data.success) {
+                if (res.success) {
                     console.log('预发布成功');
+                    this.getData();
                 }
             })
         },
         production(row) {
+            this.$set(row, 'loading', true);
             console.log(row)
             ajax({
                 url: 'production',
@@ -168,14 +171,17 @@ export default {
                     pid: row.pid,
                 },
             }).then(res => {
-
                 console.log(res);
-                if (res.data.success) {
+                this.$set(row, 'loading', false);
+                this.$set(row, 'status', row.status + 1);
+                if (res.success) {
                     console.log('预发布成功');
+                    this.getData();
                 }
             })
         },
         mergeToMaster(row) {
+            this.$set(row, 'loading', true);
             ajax({
                 url: 'mergeToMaster',
                 params: {
@@ -184,10 +190,12 @@ export default {
                     pid: row.pid,
                 },
             }).then(res => {
-
+                this.$set(row, 'loading', false);
+                this.$set(row, 'status', row.status + 1);
                 console.log(res);
-                if (res.data.success) {
+                if (res.success) {
                     console.log('预发布成功');
+                    this.getData();
                 }
             })
         },
@@ -202,6 +210,7 @@ export default {
                 this.totalPage = res.count;
                 this.tableData = res.data;
                 this.tableData.forEach((item) => {
+                    this.$set(item, 'loading', false);
                     if (item.status === 1) {
                         item.statusText = '新建';
                     } else if (item.status === 2) {
@@ -296,6 +305,7 @@ export default {
             })
         },
         updateDemandStatus(row, status) {
+            this.$set(row, 'loading', true);
             ajax({
                 url: 'updateDemandStatus',
                 params: {
@@ -303,6 +313,8 @@ export default {
                     status,
                 },
             }).then(res => {
+                this.$set(row, 'loading', false);
+                this.$set(row, 'status', status);
                 console.log(res);
             })
         },
