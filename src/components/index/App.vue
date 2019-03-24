@@ -74,7 +74,7 @@
     </el-dialog>
 
     <!-- 新建分支 -->
-    <el-dialog title="新建需求" :visible.sync="dialogVisible1" width="60%">
+    <el-dialog title="新建分支" :visible.sync="dialogVisible1" width="60%">
         <el-form ref="form1" :model="form1" label-width="80px">
             <el-form-item label="项目名称">
                 <el-select @change="projectChange" v-model="form1.pid" placeholder="请选择项目">
@@ -279,6 +279,7 @@ export default {
             }).then(res => {
                 console.log(res);
                 this.dialogVisible1 = false;
+                this.getData();
             })
             console.log(this.form1)
         },

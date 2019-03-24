@@ -1,7 +1,7 @@
 import axios from 'axios';
 const ajax = (opt) => new Promise((resolve, reject) => {
     let options = {
-        url: `http://test.xue.com:3001/api/${opt.url}`,
+        url: `http://api.xue.com:3001/api/${opt.url}`,
         method: opt.method || 'get',
         params: opt.params || {},
         data: opt.data || {},

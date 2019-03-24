@@ -12,7 +12,7 @@
         <el-table-column prop="project_dir" label="项目目录(project)"></el-table-column>
         <el-table-column prop="project_pre" label="验证cookie"></el-table-column>
         <el-table-column prop="project_predir" label="预发目录(pre-dir)"></el-table-column>
-        <el-table-column prop="project_prepro" label="生产目录(pro-dir)"></el-table-column>
+        <el-table-column prop="project_prodir" label="生产目录(pro-dir)"></el-table-column>
     </el-table>
 </div>
 </template>
