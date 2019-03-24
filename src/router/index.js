@@ -26,11 +26,6 @@ const routes = [
         name: 'index',
         component: index,
     },
-    {
-        path: '/test',
-        name: 'test',
-        component: test
-    }
 ];
 
 export default new Router({
