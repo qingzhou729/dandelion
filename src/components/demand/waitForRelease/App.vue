@@ -24,6 +24,7 @@
             <template slot-scope="scope">
                 <el-button size="mini" @click="pretest(scope.row)">部署预发环境</el-button>
                 <el-button size="mini" @click="production(scope.row)">部署生产环境</el-button>
+                <el-button size="mini" @click="mergeToMaster(scope.row)">合并主干</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -126,6 +127,21 @@ export default {
             console.log(row)
             ajax({
                 url: 'production',
+                params: {
+                    branch_name: row.branch_name,
+                    did: row.did,
+                },
+            }).then(res => {
+
+                console.log(res);
+                if (res.data.success) {
+                    console.log('预发布成功');
+                }
+            })
+        },
+        mergeToMaster() {
+            ajax({
+                url: 'mergeToMaster',
                 params: {
                     branch_name: row.branch_name,
                     did: row.did,
