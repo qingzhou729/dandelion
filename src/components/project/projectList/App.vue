@@ -2,69 +2,18 @@
 <div class="wrap">
     <!-- 头部文案 -->
     <div>
-        <h2>发布队列</h2>
+        <h2>项目列表</h2>
     </div>
     <!-- 需求列表 -->
-    <el-table border ref="filterTable" :data="tableData" width="100%">
-        <el-table-column prop="create_time" label="日期" sortable width="180">
-        </el-table-column>
-        <el-table-column prop="title" label="需求标题"></el-table-column>
-        <el-table-column prop="project_name" label="项目"></el-table-column>
-        <!-- <el-table-column prop="status" label="状态" width="110px">
-            <template slot-scope="scope">
-                <el-tag :type="'primary'" disable-transitions>{{scope.row.statusText}}</el-tag>
-            </template>
-        </el-table-column> -->
-        <el-table-column label="分支管理" width="200px">
-            <template slot-scope="scope">
-                <el-button v-if="!scope.row.branch_name" size="mini" @click="createBranch(scope)">创建分支</el-button>
-                {{scope.row.branch_name}}
-            </template>
-        </el-table-column>
-        <el-table-column label="发布">
-            <template slot-scope="scope">
-                <!-- status 
-                    1、新建
-                    2、开发中
-                    3、部署到预发环境，待验证
-                    4、预发验证通过，待正式发布
-                    5、正式环境部署、待验证
-                    6、正式环境验证，待合并主干
-                    7、完成合并主干，发布完成
-                -->
-                <el-tag :type="'primary'" v-if="scope.row.status === 1" disable-transitions>新建</el-tag>
-                <el-button v-if="scope.row.status === 2" size="mini" type="warning" plain @click="pretest(scope.row)">部署至预发环境</el-button>
-                <el-button v-if="scope.row.status === 3" size="mini" type="primary" @click="updateDemandStatus(scope.row, 4)">预发环境验证</el-button>
-                <el-button v-if="scope.row.status === 4" size="mini" type="warning" plain  @click="production(scope.row)">部署至生产环境</el-button>
-                <el-button v-if="scope.row.status === 5" size="mini" type="success" @click="updateDemandStatus(scope.row, 6)">正式环境验证</el-button>
-                <el-button v-if="scope.row.status === 6" size="mini" type="success" @click="mergeToMaster(scope.row)">合并主干</el-button>
-                <el-tag :type="'success'" v-if="scope.row.status === 7" disable-transitions>需求已经完完结</el-tag>
-            </template>
-        </el-table-column>
+    <el-table border ref="filterTable" :data="projectData" width="100%">
+        <el-table-column prop="project_name" label="项目名称"></el-table-column>
+        <el-table-column prop="project_shortid" label="项目描述"></el-table-column>
+        <el-table-column prop="project_url" label="项目url"></el-table-column>
+        <el-table-column prop="project_dir" label="项目目录(project)"></el-table-column>
+        <el-table-column prop="project_predir" label="验证cookie"></el-table-column>
+        <el-table-column prop="project_pre" label="预发目录(pre-project)"></el-table-column>
+        <el-table-column prop="project_prepro" label="生产目录(pro-project)"></el-table-column>
     </el-table>
-    <!-- 分页组件 -->
-    <el-pagination class="pagination" background layout="prev, pager, next, total" :current-page="page" @current-change="currentChange" :total="totalPage">
-    </el-pagination>
-
-    <!-- 新建分支 -->
-    <el-dialog title="新建需求" :visible.sync="dialogVisible1" width="60%">
-        <el-form ref="form1" :model="form1" label-width="80px">
-            <el-form-item label="项目名称">
-                <el-select v-model="form1.pid" placeholder="请选择项目">
-                    <el-option v-for="(item, index) in projectData" :label="item.project_name" :value="item.pid" :key="index"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="发布时间">
-                <el-col :span="11">
-                    <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" type="date" placeholder="选择日期" v-model="form1.pub_time" style="width: 100%;"></el-date-picker>
-                </el-col>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="onSubmit1">立即创建</el-button>
-                <el-button @click="dialogVisible1 = false">取消</el-button>
-            </el-form-item>
-        </el-form>
-    </el-dialog>
 </div>
 </template>
 

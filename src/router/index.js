@@ -4,6 +4,7 @@ import login from '@/components/login/App.vue';
 import register from '@/components/register/App.vue';
 import index from '@/components/index/App.vue';
 import waitForRelease from '@/components/demand/waitForRelease/App.vue';
+import projectList from '@/components/project/projectList/App.vue';
 Vue.use(Router)
 
 const routes = [
@@ -31,6 +32,11 @@ const routes = [
         path: '/waitForRelease',
         name: 'waitForRelease',
         component: waitForRelease,
+    },
+    {
+        path: '/projectList',
+        name: 'projectList',
+        component: projectList,
     },
 ];
 

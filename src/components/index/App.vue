@@ -2,12 +2,12 @@
 <div class="wrap">
     <!-- 头部文案 -->
     <div>
-        <h2>按时间排序的所有需求</h2>
+        <h2>我的任务</h2>
     </div>
     <!-- 按钮区域 -->
     <div>
         <el-button type="primary" @click="addDemand" style="margin-right:20px;">新建需求</el-button>
-        <el-select v-model="value" placeholder="筛选">
+        <el-select v-model="value" placeholder="筛选" @change="selectChange">
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
         </el-select>
@@ -22,13 +22,29 @@
         <el-table-column prop="demand_desc" label="需求描述"></el-table-column>
         <el-table-column prop="status" label="状态" width="110px">
             <template slot-scope="scope">
-                <el-tag :type="'primary'" disable-transitions>{{scope.row.statusText}}</el-tag>
+                <!-- status 
+                    1、新建
+                    2、开发中
+                    3、部署到预发环境，待验证
+                    4、预发验证通过，待正式发布
+                    5、正式环境部署、待验证
+                    6、正式环境验证，待合并主干
+                    7、完成合并主干，发布完成
+                -->
+                <el-tag :type="'primary'" v-if="scope.row.status === 1" disable-transitions>新建</el-tag>
+                <el-tag :type="'info'" v-if="scope.row.status === 2" disable-transitions>开发中</el-tag>
+                <el-tag :type="'warning'" v-if="scope.row.status === 3" disable-transitions>发布中</el-tag>
+                <el-tag :type="'warning'" v-if="scope.row.status === 4" disable-transitions>发布中</el-tag>
+                <el-tag :type="'warning'" v-if="scope.row.status === 5" disable-transitions>发布中</el-tag>
+                <el-tag :type="'warning'" v-if="scope.row.status === 6" disable-transitions>发布中</el-tag>
+                <el-tag :type="'success'" v-if="scope.row.status === 7" disable-transitions>已完结</el-tag>
             </template>
         </el-table-column>
         <el-table-column label="分支管理" width="200px">
             <template slot-scope="scope">
                 <el-button v-if="!scope.row.branch_name" size="mini" @click="createBranch(scope)">创建分支</el-button>
-                {{scope.row.branch_name}}
+                <p>{{scope.row.branch_name}}</p>
+                <el-button v-if="scope.row.branch_name" size="mini" @click="goPublish()">去发布</el-button>
             </template>
         </el-table-column>
         <el-table-column label="操作" width="160px">
@@ -131,7 +147,7 @@ export default {
                 value: 3,
                 label: '发布中'
             }, {
-                value: 4,
+                value: 7,
                 label: '已完结'
             }],
             value: ''
@@ -142,6 +158,18 @@ export default {
         this.getProjectInfo();
     },
     methods: {
+        selectChange(e) {
+            if (e === 3) {
+                e = `3,4,5,6`;
+            }
+            // console.log(e)
+            this.getData(e);
+        },
+        goPublish() {
+            this.$router.push({
+                path: '/waitForRelease', 
+            });
+        },
         handleClick(tab, event) {
             console.log(tab, event);
         },
@@ -187,12 +215,12 @@ export default {
                 }
             })
         },
-        getData() {
+        getData(status) {
             ajax({
                 url: 'selectUserDemand',
                 params: {
                     page: this.page,
-                    status: '',
+                    status: status,
                 },
             }).then(res => {
                 this.totalPage = res.count;

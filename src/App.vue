@@ -54,14 +54,9 @@ export default {
                     },
                     menugroup: [
                         {
-                            title: '项目信息',
-                            router: '',
+                            title: '项目列表',
+                            router: '/projectList',
                             index: "2-1",
-                        },
-                        {
-                            title: '我的项目',
-                            router: '',
-                            index: "2-2",
                         },
                     ],
                 },
