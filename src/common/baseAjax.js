@@ -9,6 +9,7 @@ const ajax = (opt) => new Promise((resolve, reject) => {
     }
     console.log(options);
     axios(options).then(resp => {
+        console.log(resp)
         if (resp.data.err_code === 1) {
             window.location.href = `http://test.xue.com/login`;
             return;
